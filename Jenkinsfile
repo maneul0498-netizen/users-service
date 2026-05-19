@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/TU_USUARIO/users-service.git'
+                url: 'https://github.com/maneul0498-netizen/users-service.git'
             }
         }
 
