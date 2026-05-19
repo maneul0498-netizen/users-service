@@ -12,7 +12,7 @@ type Response struct {
 
 func health(w http.ResponseWriter, r *http.Request) {
 	resp := Response{
-		Message: "service running, testing github web hook",
+		Message: "service running, testing github web hook 2",
 	}
 
 	w.Header().Set("Content-Type", "application/json")
