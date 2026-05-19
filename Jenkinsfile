@@ -15,7 +15,7 @@ pipeline {
 
             agent {
                 docker {
-                    image 'golang:1.24'
+                    image 'golang:1.26'
                     reuseNode true
                 }
             }
@@ -32,7 +32,7 @@ pipeline {
 
             agent {
                 docker {
-                    image 'golang:1.24'
+                    image 'golang:1.26'
                     reuseNode true
                 }
             }
