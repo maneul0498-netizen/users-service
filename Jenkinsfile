@@ -1,11 +1,6 @@
 pipeline {
 
-    agent {
-        docker {
-            image 'golang:1.26'
-            reuseNode true
-        }
-    }
+    agent any
 
     environment {
         GOCACHE = "${WORKSPACE}/.gocache"
@@ -16,32 +11,24 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/maneul0498-netizen/users-service.git'
-            }
-        }
-
-        stage('Debug') {
-            steps {
-                sh '''
-                    echo "Current workspace:"
-                    pwd
-
-                    echo "Go version:"
-                    go version
-
-                    echo "Go cache:"
-                    echo $GOCACHE
-
-                    echo "Files:"
-                    ls -la
-                '''
+                url: 'https://github.com/TU_USUARIO/users-service.git'
             }
         }
 
         stage('Build') {
+
+            agent {
+                docker {
+                    image 'golang:1.26'
+                    reuseNode true
+                }
+            }
+
             steps {
                 sh '''
                     mkdir -p $GOCACHE
+
+                    go version
 
                     go mod tidy
 
@@ -51,6 +38,14 @@ pipeline {
         }
 
         stage('Test') {
+
+            agent {
+                docker {
+                    image 'golang:1.26'
+                    reuseNode true
+                }
+            }
+
             steps {
                 sh '''
                     mkdir -p $GOCACHE
@@ -61,14 +56,18 @@ pipeline {
         }
 
         stage('Docker Build') {
+
             steps {
                 sh '''
+                    docker version
+
                     docker build -t users-service:latest .
                 '''
             }
         }
 
         stage('Run Container') {
+
             steps {
                 sh '''
                     docker rm -f users-service || true
