@@ -74,7 +74,7 @@ pipeline {
 
                     docker run -d \
                         --name users-service \
-                        -p 8080:8080 \
+                        -p 8081:8081 \
                         users-service:latest
                 '''
             }
